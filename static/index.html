@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Websockets Client</title>
 
-    <link href="/styles.css" rel="stylesheet" />
+    <link href="./styles.css" rel="stylesheet" />
     <link
       href="https://unpkg.com/vue-simple-notify/dist/vue-simple-notify.min.css"
       rel="stylesheet"
@@ -14,7 +14,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/vue-simple-notify/dist/vue-simple-notify.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
+		<script src="https://cdn.socket.io/4.3.2/socket.io.min.js" integrity="sha384-KAZ4DtjNhLChOB/hxXuKqhMLYvx3b5MlT55xPEiNmREKRzeEm+RVPlTnAn0ajQNs" crossorigin="anonymous"></script>
   </head>
   <body>
     <main id="v-app">
@@ -91,12 +91,12 @@
 
           this.username = username;
 
-          this.socket.chat = io('http://192.168.0.38:3000/chat');
+          this.socket.chat = io('http://localhost:3000/chat');
           this.socket.chat.on('chatToClient', (msg) => {
             this.receiveChatMessage(msg);
           });
 
-          this.socket.alerts = io('http://192.168.0.38:3000/user');
+          this.socket.alerts = io('http://localhost:3000/user');
           this.socket.alerts.on('alertToClient', (msg) => {
             this.receiveAlertMessage(msg);
           });

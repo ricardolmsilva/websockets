@@ -4,7 +4,7 @@ import { WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import { Server } from 'socket.io';
 
 @Injectable()
-@WebSocketGateway({ namespace: '/user' })
+@WebSocketGateway({ namespace: '/user', cors: '*:*' })
 export class UserGateway {
   @WebSocketServer()
   wss: Server;
