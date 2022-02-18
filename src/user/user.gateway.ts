@@ -9,7 +9,7 @@ export class UserGateway {
   @WebSocketServer()
   wss: Server;
 
-  @OnEvent('order.created')
+  @OnEvent('userCreated')
   sendToAll(msg: string) {
     this.wss.emit('alertToClient', { type: 'Alert', message: msg });
   }

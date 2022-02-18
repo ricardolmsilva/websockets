@@ -22,7 +22,7 @@ export class UserController {
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
     const user = await this.userService.create(createUserDto);
-    this.userGateway.sendToAll(`added!!!`);
+    this.userGateway.sendToAll(`${user.name} added!!!`);
     return user;
   }
 

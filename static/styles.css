@@ -1,22 +1,75 @@
-main {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-areas: 'chat alerts';
+body {
+  margin: 0;
+  background-color: rgb(215, 215, 215);
 }
 
-section.chat {
-  grid-area: chat;
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-section.alerts {
-  grid-area: alerts;
+main#v-app {
+  display: flex;
+  height: 100vh;
 }
 
-.tab-row {
-  padding-top: 20px;
+.chat-rooms {
+  width: 100%;
+  background-color: white;
 }
 
-.tab-btn.active {
-  background: blue;
-  color: white;
+.chat-rooms__list {
+  width: 350px;
+  margin: 0;
+  padding: 0;
+}
+
+.chat-rooms__list__item {
+  border-bottom: 1px solid rgb(227, 227, 227);
+  padding: 20px 10px;
+  margin: 0 10px;
+}
+
+section.chat-content {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+nav {
+  background-color: white;
+  padding: 30px 20px;
+}
+
+.content {
+  background: rgb(190, 190, 190);
+  flex: 1; /* fill the remaining space */
+  min-height: 0; /* optional */
+  overflow: auto; /* overflow if exceeds available space */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+
+  padding: 0 30px 50px;
+}
+
+.content::-webkit-scrollbar {
+  display: none;
+}
+
+.footer {
+  background: rgb(168, 168, 168);
+  flex: 0 0 auto; /* don't grow or shrink in any case */
+}
+form {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 30px 50px;
+}
+
+input {
+  width: 100%;
+  padding: 5px;
 }

@@ -20,9 +20,7 @@ export class UserSubscriber implements EntitySubscriberInterface<User> {
 
   afterInsert(event: InsertEvent<User>): void | Promise<any> {
     console.log(event.entity);
-
-    this.eventEmitter.emit('order.created');
-
+    // this.eventEmitter.emit('userCreated');
     // this.userGateway.sendToAll(`${event.entity.name} added!!!`);
   }
 }

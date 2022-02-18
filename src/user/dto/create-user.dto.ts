@@ -6,7 +6,4 @@ export class CreateUserDto {
 
   @isNotBlank()
   surname: string;
-
-  @isNotBlank()
-  username: string;
 }

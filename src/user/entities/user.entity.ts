@@ -18,9 +18,6 @@ export class User {
   @Column({ type: 'varchar', nullable: false })
   surname: string;
 
-  @Column({ type: 'varchar', nullable: false, unique: true })
-  username: string;
-
   // Timestamps
   @Column()
   @CreateDateColumn()

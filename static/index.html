@@ -17,24 +17,38 @@
     <script src="/socket.io/socket.io.js"></script>
   </head>
   <body>
-    <div id="v-app">
-      <section class="alerts">
-        <alerts-component :items="alerts"></alerts-component>
-      </section>
-      <section class="chat">
-        <h1>Websockets Tester</h1>
+    <main id="v-app">
+      <aside class="chat-rooms">
+        <!-- <nav>
+          <alerts-component :items="alerts"></alerts-component>
+          Chats
+        </nav>
 
-        <ul>
-          <li v-for="msg of messages">
-            <strong>{{msg.sender}}:</strong> {{msg.message}}
-          </li>
+        <ul class="chat-rooms__list">
+          <li class="chat-rooms__list__item">Amy</li>
+          <li class="chat-rooms__list__item">John</li>
         </ul>
+      </aside> -->
 
-        <form @submit.prevent="sendChatMessage">
-          <input type="text" v-model="text" />
-        </form>
+      <section class="chat-content">
+        <nav class="nav">
+          <span>Public room</span>
+          <alerts-component :items="alerts"></alerts-component>
+        </nav>
+        <section class="content" id="scrollTopButton">
+          <ul>
+            <li v-for="msg of messages">
+              <strong>{{msg.sender}}:</strong> {{msg.message}}
+            </li>
+          </ul>
+        </section>
+        <footer class="footer">
+          <form @submit.prevent="sendChatMessage">
+            <input placeholder="Type your message" type="text" v-model="text" />
+          </form>
+        </footer>
       </section>
-    </div>
+    </main>
 
     <script>
       Vue.component('alerts-component', VueSimpleNotify.VueSimpleNotify);
@@ -59,6 +73,8 @@
           receiveChatMessage(msg) {
             console.log(`recv: ${msg}`);
             this.messages.push(msg);
+            const scrollTopButton = document.getElementById('scrollTopButton');
+            scrollTopButton.scrollTo(0, document.body.scrollHeight);
           },
           receiveAlertMessage(msg) {
             console.log(`recv: ${msg}`);
@@ -66,14 +82,21 @@
           },
         },
         created() {
-          this.username = prompt('Enter your username');
+          let username = localStorage.getItem('username');
 
-          this.socket.chat = io('http://localhost:3000/chat');
+          if (!username) {
+            username = prompt('Enter your username');
+            localStorage.setItem('username', username);
+          }
+
+          this.username = username;
+
+          this.socket.chat = io('http://192.168.0.38:3000/chat');
           this.socket.chat.on('chatToClient', (msg) => {
             this.receiveChatMessage(msg);
           });
 
-          this.socket.alerts = io('http://localhost:3000/user');
+          this.socket.alerts = io('http://192.168.0.38:3000/user');
           this.socket.alerts.on('alertToClient', (msg) => {
             this.receiveAlertMessage(msg);
           });
