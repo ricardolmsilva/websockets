@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { OnEvent } from '@nestjs/event-emitter';
 import { WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import { Server } from 'socket.io';
 
@@ -7,9 +6,8 @@ import { Server } from 'socket.io';
 @WebSocketGateway({ namespace: '/user', cors: '*:*' })
 export class UserGateway {
   @WebSocketServer()
-  wss: Server;
+  public wss: Server;
 
-  @OnEvent('userCreated')
   sendToAll(msg: string) {
     this.wss.emit('alertToClient', { type: 'Alert', message: msg });
   }

@@ -10,8 +10,8 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'db',
-      entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      subscribers: [__dirname + '/**/*.subscriber{.ts,.js}'],
+      entities: [`${__dirname}/**/*.entity{.ts,.js}`],
+      subscribers: [`${__dirname}/**/*.subscriber{.ts,.js}`],
       synchronize: true,
     }),
     EventEmitterModule.forRoot(),

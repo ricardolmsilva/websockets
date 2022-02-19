@@ -1,26 +1,24 @@
-import { EventEmitter2 } from '@nestjs/event-emitter';
-import {
-  EntitySubscriberInterface,
-  EventSubscriber,
-  InsertEvent,
-} from 'typeorm';
+import { Injectable } from '@nestjs/common';
+import { InjectConnection } from '@nestjs/typeorm';
+import { Connection, EntitySubscriberInterface, InsertEvent } from 'typeorm';
 import { User } from './entities/user.entity';
 import { UserGateway } from './user.gateway';
 
-@EventSubscriber()
+@Injectable()
+// @EventSubscriber()
 export class UserSubscriber implements EntitySubscriberInterface<User> {
+  // constructor(private userGateway: UserGateway) {}
   constructor(
-    private eventEmitter: EventEmitter2,
-    private userGateway: UserGateway,
-  ) {}
-
+    @InjectConnection() readonly connection: Connection,
+    private readonly userGateway: UserGateway,
+  ) {
+    connection.subscribers.push(this);
+  }
   listenTo(): any {
     return User;
   }
 
   afterInsert(event: InsertEvent<User>): void | Promise<any> {
-    console.log(event.entity);
-    // this.eventEmitter.emit('userCreated');
-    // this.userGateway.sendToAll(`${event.entity.name} added!!!`);
+    this.userGateway.sendToAll(`${event.entity.name} added!!!`);
   }
 }
